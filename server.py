@@ -7,7 +7,7 @@ TCP_PORT = 8080
 
 def run_server(ip, port):
     def handle(sock: socket.socket, address: str):
-        print(f'Connection established {address}')
+        print(f'SERVER: Connection established {address}')
         while True:
             message = sock.recv(1024).decode()
             if not message:
@@ -19,9 +19,9 @@ def run_server(ip, port):
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((ip, port))
-    server_socket.listen(10)
+    server_socket.listen(2)
     print(f'Start echo server {server_socket.getsockname()}')
-    with futures.ThreadPoolExecutor(10) as client_pool:
+    with futures.ThreadPoolExecutor(2) as client_pool:
         try:
             while True:
                 new_sock, address = server_socket.accept()

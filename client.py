@@ -1,4 +1,3 @@
-from email import message
 import socket
 
 TCP_IP = '127.0.0.1'
@@ -9,17 +8,16 @@ def run_client(ip: str, port: int):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         server = ip, port
         sock.connect(server)
-        print(f'Connection established {server}')
-        # message = input('--> ')
-        message = input(f'Enter your message: ')
+        print(f'CLIENT: Connection established {server}')
+        message = input('--> ')
 
         while message.lower().strip() != 'end':
             sock.send(message.encode())
-            response = sock.recv(1024)
-            print(f'Response data: {response.decode()}')
+            response = sock.recv(1024).decode()
+            print(response)
             message = input('--> ')
 
-    print(f'Data transfer completed')
+    print(f'Ok')
     sock.close()
 
 
